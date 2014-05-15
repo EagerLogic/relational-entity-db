@@ -8,10 +8,9 @@
     <packaging>jar</packaging>
     <dependencies>
         <dependency>
-            <groupId>javadb</groupId>
-            <artifactId>javadb</artifactId>
-            <version>10.9.1.0</version>
-            <type>zip</type>
+            <groupId>org.apache.derby</groupId>
+            <artifactId>derby</artifactId>
+            <version>10.10.2.0</version>
         </dependency>
     </dependencies>
     <properties>
