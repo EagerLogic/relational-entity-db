@@ -134,7 +134,7 @@ class RelationalDB {
                 res = new Entity(rs.getString("kind"));
                 res.setId(rs.getLong("id"));
                 Blob value = rs.getBlob("value");
-                res.setValue(value == null ? null : value.getBytes(1, (int) value.length()));
+                res.setByteValue(value == null ? null : value.getBytes(1, (int) value.length()));
 
                 Collection<AttributeDTO> attributes = getAttributes(id).values();
                 for (AttributeDTO attr : attributes) {
@@ -186,8 +186,8 @@ class RelationalDB {
         try {
             ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, entity.getKind());
-            if (entity.getValue() != null) {
-                ps.setBlob(2, new SerialBlob(entity.getValue()));
+            if (entity.getByteValue() != null) {
+                ps.setBlob(2, new SerialBlob(entity.getByteValue()));
             } else {
                 ps.setNull(2, Types.BLOB);
             }
@@ -297,7 +297,7 @@ class RelationalDB {
             ps = conn.prepareStatement(sql);
             ps.setString(1, entity.getKind());
             if (entity.getValue() != null) {
-                ps.setBlob(2, new SerialBlob(entity.getValue()));
+                ps.setBlob(2, new SerialBlob(entity.getByteValue()));
             } else {
                 ps.setNull(2, Types.BLOB);
             }

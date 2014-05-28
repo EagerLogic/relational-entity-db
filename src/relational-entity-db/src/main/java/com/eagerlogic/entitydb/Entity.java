@@ -6,8 +6,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -67,23 +65,27 @@ public final class Entity implements Serializable {
      *
      * @return The value of this entity.
      */
-    public byte[] getValue() {
+    byte[] getByteValue() {
         return value;
     }
     
-    public String getStringValue() {
-        if (value == null) {
-            return null;
-        }
-        
-        try {
-            return new String(value, "UTF-8");
-        } catch (UnsupportedEncodingException ex) {
-            throw new RuntimeException(ex);
-        }
+//    public String getStringValue() {
+//        if (value == null) {
+//            return null;
+//        }
+//        
+//        try {
+//            return new String(value, "UTF-8");
+//        } catch (UnsupportedEncodingException ex) {
+//            throw new RuntimeException(ex);
+//        }
+//    }
+    
+    public EntityValue getValue() {
+        return getObjectValue();
     }
     
-    public <T> T getObjectValue() {
+    private <T> T getObjectValue() {
         if (value == null) {
             return null;
         }
@@ -119,11 +121,15 @@ public final class Entity implements Serializable {
      *
      * @param value The new value of this entity.
      */
-    public void setValue(byte[] value) {
+    void setByteValue(byte[] value) {
         this.value = value;
     }
     
-    public void setValue(Object obj) {
+    public void setValue(EntityValue value) {
+        setValue((Object) value);
+    }
+    
+    private void setValue(Object obj) {
         if (obj == null) {
             this.value = null;
             return;
@@ -157,17 +163,17 @@ public final class Entity implements Serializable {
         }
     }
     
-    public void setValue(String value) {
-        if (value == null) {
-            this.value = null;
-            return;
-        }
-        try {
-            this.value = value.getBytes("UTF-8");
-        } catch (UnsupportedEncodingException ex) {
-            throw new RuntimeException(ex);
-        }
-    }
+//    public void setValue(String value) {
+//        if (value == null) {
+//            this.value = null;
+//            return;
+//        }
+//        try {
+//            this.value = value.getBytes("UTF-8");
+//        } catch (UnsupportedEncodingException ex) {
+//            throw new RuntimeException(ex);
+//        }
+//    }
 
     /**
      * Puts the given long value as an attribute associated with the given key.
