@@ -42,6 +42,9 @@ public final class Filter {
         if (!kind.equals(entity.getKind())) {
             return false;
         }
+        if (filterItem == null) {
+            return true;
+        }
         return filterItem.match(entity);
     }
 

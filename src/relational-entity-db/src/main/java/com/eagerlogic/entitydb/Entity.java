@@ -181,7 +181,7 @@ public final class Entity implements Serializable {
      * @param key The key of the given attribute.
      * @param value The value of the attribute.
      */
-    public void putAttribute(String key, long value) {
+    public void putAttribute(String key, Long value) {
         attributes.put(key, value);
     }
 
@@ -192,7 +192,7 @@ public final class Entity implements Serializable {
      * @param key The key of the given attribute.
      * @param value The value of the attribute.
      */
-    public void putAttribute(String key, boolean value) {
+    public void putAttribute(String key, Boolean value) {
         attributes.put(key, value);
     }
 
@@ -204,9 +204,6 @@ public final class Entity implements Serializable {
      * @param value The value of the attribute, Can not be null.
      */
     public void putAttribute(String key, String value) {
-        if (value == null) {
-            throw new NullPointerException("The value can not be null.");
-        }
         attributes.put(key, value);
     }
 
@@ -217,7 +214,7 @@ public final class Entity implements Serializable {
      *
      * @return The attribute associated with the given key.
      */
-    public long getLongAttribute(String key) {
+    public Long getLongAttribute(String key) {
         return ((Long) attributes.get(key));
     }
 
@@ -228,7 +225,7 @@ public final class Entity implements Serializable {
      *
      * @return The attribute associated with the given key.
      */
-    public boolean getBooleanAttribute(String key) {
+    public Boolean getBooleanAttribute(String key) {
         return ((Boolean) attributes.get(key));
     }
 

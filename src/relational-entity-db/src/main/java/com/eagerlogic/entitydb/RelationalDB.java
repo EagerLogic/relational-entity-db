@@ -114,6 +114,7 @@ class RelationalDB {
     public void close() {
         try {
             conn.close();
+            DriverManager.getConnection("jdbc:derby:;shutdown=true");
         } catch (SQLException ex) {
             Logger.getLogger(RelationalDB.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -219,6 +220,9 @@ class RelationalDB {
             type = AttributeDTO.EType.LONG;
         } else if (value instanceof String) {
             type = AttributeDTO.EType.STRING;
+        } else if (value == null) {
+            // skip
+            return;
         } else {
             throw new IllegalArgumentException("Attribute value must be String, Boolean or Long and not: " + value.getClass().getName());
         }
