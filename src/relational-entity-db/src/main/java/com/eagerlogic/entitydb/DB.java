@@ -75,6 +75,20 @@ public final class DB {
 	public List<Entity> query(Filter filter) {
 		return entityDB.query(filter);
 	}
+        
+        public List<Entity> queryAll(String kind) {
+            if (kind == null) {
+                throw new NullPointerException("The 'kind' attribute can not be null.");
+            }
+            return entityDB.queryAll(kind);
+        }
+        
+        public Set<Long> queryAllKeys(String kind) {
+            if (kind == null) {
+                throw new NullPointerException("The 'kind' attribute can not be null.");
+            }
+            return entityDB.queryAllKeys(kind);
+        }
 
 	/**
 	 * Executes a query based on the given filter and returns the only one result returned by the query.

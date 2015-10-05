@@ -346,6 +346,49 @@ class RelationalDB {
             }
         }
     }
+    
+    public List<Entity> queryAll(String kind) {
+        String sql = "SELECT id FROM Entity WHERE kind='" + kind + "'";
+        
+        Set<Long> ids = new TreeSet<>();
+        
+        Statement stmt = null;
+        ResultSet rs = null;
+        try {
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                ids.add(rs.getLong(1));
+            }
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(RelationalDB.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(RelationalDB.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        
+        List<Entity> res = new ArrayList<>();
+        Iterator<Long> it = ids.iterator();
+        while (it.hasNext()) {
+            Long id = it.next();
+            Entity e = get(id);
+            res.add(e);
+        }
+        
+        return res;
+    }
 
     public List<Entity> query(Filter filter) {
         String sql = "SELECT entityId FROM Attribute WHERE " + filter.getCondition();
@@ -386,6 +429,41 @@ class RelationalDB {
             Entity e = get(id);
             if (filter.match(e)) {
                 res.add(e);
+            }
+        }
+        
+        return res;
+    }
+    
+    public Set<Long> queryAllKeys(String kind) {
+        String sql = "SELECT id FROM Entity WHERE kind='" + kind + "'";
+        
+        Set<Long> res = new TreeSet<>();
+        
+        Statement stmt = null;
+        ResultSet rs = null;
+        try {
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                res.add(rs.getLong(1));
+            }
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(RelationalDB.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(RelationalDB.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
         

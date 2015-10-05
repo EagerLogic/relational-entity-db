@@ -95,6 +95,14 @@ public final class EntityDB {
             lock.unlock();
         }
     }
+    
+    List<Entity> queryAll(String kind) {
+        return rdb.queryAll(kind);
+    }
+    
+    Set<Long> queryAllKeys(String kind) {
+        return rdb.queryAllKeys(kind);
+    }
 
     List<Entity> query(Filter filter) {
         if (closed) {
